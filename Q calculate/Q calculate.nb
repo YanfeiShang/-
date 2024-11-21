@@ -1,0 +1,26 @@
+
+$Assumptions = {m \[Element] Integers, m > 0, n \[Element] Integers, 
+   n > 0, x \[Element] Reals, y \[Element] Reals, z \[Element] Reals, 
+   a \[Element] Reals, b \[Element] Reals, 
+   k3 \[Element] Reals, \[Omega] \[Element] 
+    Reals, \[Epsilon] \[Element] Reals, \[Epsilon]1 \[Element] Reals};
+k1 = m*Pi/a;
+k2 = n*Pi/b;
+kt = Sqrt[k1^2 + k2^2];
+Ez[x_, y_, z_] := Sin[k1*x] Sin[k2*y] Exp[-I*k3*z];
+Ex[x_, y_, z_] := -I*k3/kt^2*k1*Cos[k1*x] Sin[k2*y] Exp[-I*k3*z];
+Ey[x_, y_, z_] := -I*k3/kt^2*k2*Sin[k1*x] Cos[k2*y] Exp[-I*k3*z];
+Hz[x_, y_, z_] := 0;
+Hx[x_, y_, z_] := 
+  I*\[Omega]*\[Epsilon]/kt^2*k2*Sin[k1*x] Cos[k2*y] Exp[-I*k3*z];
+Hy[x_, y_, z_] := -I*\[Omega]*\[Epsilon]/kt^2 k1*
+   Cos[k1*x] Sin[k2*y] Exp[-I*k3*z];
+We = \[Omega]*\[Epsilon]1/2*
+  Integrate[
+   Ex[x, y, z]*Conjugate[Ex[x, y, z]] + 
+    Ey[x, y, z]*Conjugate[Ey[x, y, z]] + 
+    Ez[x, y, z]*Conjugate[Ez[x, y, z]], {x, 0, a}, {y, 0, b}, {z, 0, 
+    1}]
+P0 = 1/2 Integrate[
+   Ex[x, y, z]*Conjugate[Hy[x, y, z]] - 
+    Ey[x, y, z]*Conjugate[Hx[x, y, z]], {x, 0, a}, {y, 0, b}]
